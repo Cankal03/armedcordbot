@@ -13,19 +13,23 @@ module.exports = {
       const reason = interaction.options.getString('reason') || "No reason given!"
       const member = await interaction.guild.members.fetch(user.id).catch(console.error);
 
-      await member.kick(reason).catch(console.error)
+      try {
+         await member.kick(reason)
 
-      await user.send({
-         content: `You kicked from ${interaction.guild.name}`
-      }).catch(console.log(`user's dm's are off.`))
+         await interaction.reply({
+            content: `<a:US_yes:970033604581265468> | ${member.user.tag} has been kicked with the reason of ${reason}`
+         })
 
+         await user.send({
+            content: `You kicked from ${interaction.guild.name}`
+         }).catch(console.error())
+      } catch (error) {
+         if (error) {
+            interaction.reply({
+               content: 'Failed to kick user.'
+            })
+         }
 
-
-
-
-
-
-
+      }
    }
-
 }
