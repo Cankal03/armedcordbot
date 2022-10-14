@@ -3,8 +3,8 @@ const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 module.exports = {
    data: new SlashCommandBuilder()
       .setName('ban')
-      .setDescription('ban user')
-      .addUserOption(option => option.setName('target').setDescription('Target the member to ban').setRequired(true))
+      .setDescription('Ban user')
+      .addUserOption(option => option.setName('target').setDescription('The user to ban').setRequired(true))
       .addIntegerOption(option =>
          option.setName('delete_messages')
             .setDescription('How much of their recent messages hisotry to delete')
@@ -22,13 +22,6 @@ module.exports = {
       const delete_messagesdays = interaction.options.getInteger('delete_messages')
       const member = await interaction.guild.members.fetch(user.id).catch(console.error);
 
-      console.log(delete_messagesdays)
-
-
-
-
-
-
       try {
          await member.ban({
             deleteMessagesDays: delete_messagesdays,
@@ -41,27 +34,13 @@ module.exports = {
 
          await user.send({
             content: `You banned from ${interaction.guild.name}`
-         })
+         }).catch(console.error())
       } catch (error) {
          if (error) {
             interaction.reply({
                content: `Failed to ban the user.`
             })
          }
-
-
       }
-
-
-
-
-
-
-
-
-
-
-
    }
-
 }
