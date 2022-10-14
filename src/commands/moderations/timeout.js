@@ -30,15 +30,25 @@ module.exports = {
       const duration = interaction.options.getInteger('duration')
       const member = await interaction.guild.members.fetch(user.id).catch(console.error);
 
+      try {
+         await member.timeout(duration, reason).catch(console.error);
 
+         await interaction.reply({
+            content: `<a:US_yes:970033604581265468> | **${member.user.tag}** has been timed out with reason of *${reason}*`
+         })
 
+         await user.send({
+            content: `You timeouted from ${interaction.guild.name}`
+         }).catch(console.error())
+      } catch (error) {
+         if (error) {
+            interaction.reply({
+               content: 'Failed to timeout the user.'
+            })
+         }
+      }
+   
       /*console.log(duration)*/
-
-      await member.timeout(duration, reason).catch(console.error);
-
-      await interaction.reply({
-         content: `<a:US_yes:970033604581265468> | **${member.user.tag}** has been timed out with reason of *${reason}*`
-      })
       /*console.log({user, reason, duration, member})*/
 
       /*await member.ban({
@@ -49,14 +59,6 @@ module.exports = {
       await user.send({
        content: `You banned from ${interaction.guild.name}`
       }).catch(console.log(`user's dm's are off.`))*/
-
-
-
-
-
-
-
-
    }
 
 }
