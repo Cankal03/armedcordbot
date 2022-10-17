@@ -12,18 +12,6 @@ client.selectMenus = new Collection();
 client.modals = new Collection();
 client.commandArray = [];
 
-client.on('messageCreate', async message =>{
-    if(message.content.includes('<@1000488729565208606>')){
-        let embed = new EmbedBuilder()
-        .setDescription(`${client.user.tag} only supports gloabl (/) commands, try /help`)
-        .setColor('Green')
-
-        message.reply({
-            embeds:[embed]
-        })
-    }
- 
-})
 
 const functionsFolders = fs.readdirSync('./src/functions');
 for (const folder of functionsFolders) {
